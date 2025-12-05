@@ -20,7 +20,7 @@ const userSchema = new Schema(
             lowercase: true,
             trim: true,
         },
-        Fullname: {
+        fullname: {
             type: String,
             required: true,
             trim: true,
@@ -43,7 +43,7 @@ const userSchema = new Schema(
             type: String,
             required: [true, "Password is required"]
         },
-        refresToken: {
+        refreshToken: {
             type: String,
         }
     },
@@ -66,7 +66,7 @@ userSchema.methods.generateAccessToken = function(){
             _id: this._id,
             email:this.email,
             username:this.username,
-            fulname:this.Fullname,
+            fulname:this.fullname,
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
@@ -74,7 +74,7 @@ userSchema.methods.generateAccessToken = function(){
         }
     )
 }
-    userSchema.methods.generateRfreshToken = function(){
+    userSchema.methods.generateRefreshToken = function(){
      return jwt.sign(
         {
             _id: this._id,
@@ -86,6 +86,4 @@ userSchema.methods.generateAccessToken = function(){
         }
     )
 }
-
-
-export default mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema);
